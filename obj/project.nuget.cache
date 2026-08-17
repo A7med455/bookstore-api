@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ktt+VD3qMYA=",
+  "success": true,
+  "projectFilePath": "E:\\VS WorkSpace\\BookStoreAPI\\BookStoreAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\win 10-11\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.10\\microsoft.aspnetcore.openapi.10.0.10.nupkg.sha512",
+    "C:\\Users\\win 10-11\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
