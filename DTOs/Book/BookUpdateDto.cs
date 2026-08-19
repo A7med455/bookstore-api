@@ -2,12 +2,12 @@ namespace BookStoreAPI.DTOs.Book
 {
     public class BookUpdateDto
     {
-        public required int CategoryId{ get; set;} 
-        public required int AuthorId{ get; set;}  
-        public required string Title{ get; set;}
-        public required string ISBN{ get; set;} 
-        public required int Stock{ get; set;}
-        public required decimal Price{get; set;}
-        public required DateTime PublishedDate{ get; set;}
+        public int? CategoryId{ get; set;} 
+        public int? AuthorId{ get; set;}  
+        public string? Title{ get; set;}
+        public string? ISBN{ get; set;} 
+        public int? Stock{ get; set;}
+        public decimal? Price{get; set;}
+        public DateTime? PublishedDate{ get; set;}
     }
 }
