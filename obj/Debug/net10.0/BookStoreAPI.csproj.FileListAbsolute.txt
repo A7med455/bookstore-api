@@ -31,3 +31,4 @@ E:\VS WorkSpace\BookStoreAPI\obj\Debug\net10.0\refint\BookStoreAPI.dll
 E:\VS WorkSpace\BookStoreAPI\obj\Debug\net10.0\BookStoreAPI.pdb
 E:\VS WorkSpace\BookStoreAPI\obj\Debug\net10.0\BookStoreAPI.genruntimeconfig.cache
 E:\VS WorkSpace\BookStoreAPI\obj\Debug\net10.0\ref\BookStoreAPI.dll
+E:\VS WorkSpace\BookStoreAPI\obj\Debug\net10.0\BookStoreAPI.sourcelink.json
