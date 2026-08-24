@@ -1,5 +1,6 @@
 using BookStoreAPI.Data;
 using BookStoreAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreAPI.Repositories
 {
@@ -13,12 +14,12 @@ namespace BookStoreAPI.Repositories
 
         public List<Order> GetAll()
         {
-            return _context.Orders.ToList();
+            return _context.Orders.Include(o => o.Items).ToList();
         }
 
         public Order? GetById(int OrderId)
         {
-            return _context.Orders.Find(OrderId);
+            return _context.Orders.Include( o => o.Items).FirstOrDefault(o => o.OrderId == OrderId);
         }
 
         public Order Create(Order order, List<OrderItem> items)
