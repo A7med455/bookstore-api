@@ -1,5 +1,6 @@
 using BookStoreAPI.Data;
 using BookStoreAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreAPI.Repositories
 {
@@ -13,12 +14,12 @@ namespace BookStoreAPI.Repositories
 
         public List<Book> GetAll()
         {
-            return _context.Books.ToList();
+            return _context.Books.Include(b => b.Category).Include(b => b.Author).ToList();
         }
 
         public Book? GetById(int id)
         {
-            return _context.Books.Find(id);
+            return _context.Books.Include(b => b.Author).Include(b => b.Category).FirstOrDefault(b => b.BookId == id);
         }
          
         public Book Create(Book book)
