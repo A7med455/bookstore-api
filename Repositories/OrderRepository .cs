@@ -23,15 +23,10 @@ namespace BookStoreAPI.Repositories
 
         public Order Create(Order order, List<OrderItem> items)
         {
-            _context.Orders.Add(order);
-            _context.SaveChanges();
-            foreach (var item in items)
-            {
-                item.OrderId = order.OrderId;
-                _context.OrderItems.Add(item);
-            }
-            _context.SaveChanges();
-            return order;
+           order.Items = items;
+           _context.Orders.Add(order);
+           _context.SaveChanges();
+           return order;
         }
 
         public bool Update(int OrderId, Order order)
