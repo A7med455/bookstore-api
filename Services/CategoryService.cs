@@ -54,10 +54,6 @@ namespace BookStoreAPI.Services
             {
                 throw new ArgumentException("Category Type cannot be empty");
             }
-            if(string.IsNullOrWhiteSpace(CategoryDto.Description))
-            {
-                throw new ArgumentException("Description cannot be empty");
-            }
             Category category = MapToCategory(CategoryDto);
             _categoryRepository.Create(category);
             return MapToResponse(category);
