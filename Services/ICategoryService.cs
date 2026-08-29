@@ -6,7 +6,7 @@ namespace BookStoreAPI.Services
     {
         public List<CategoryResponseDto> GetAll();
         public CategoryResponseDto? GetById(int CategoryId);
-        public CategoryCreateDto Create(CategoryResponseDto category);
+        public CategoryResponseDto Create(CategoryCreateDto category);
         public bool Update(int CategoryId,CategoryUpdateDto category);
         public bool Delete(int CategoryId);
     }
