@@ -119,7 +119,12 @@ namespace BookStoreAPI.Services
             { 
                 return false;
             }
-            return _authorRepository.Delete(AuthorId);
+            bool AuthorDeleted = _authorRepository.Delete(AuthorId);
+            if(AuthorDeleted && existingAuthor.UserId.HasValue)
+            {
+                _userRepository.Delete(existingAuthor.UserId.Value);
+            }
+            return AuthorDeleted;
         }
         
     }
