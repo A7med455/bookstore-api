@@ -102,7 +102,12 @@ namespace BookStoreAPI.Services
             {
                 return false;
             }
-            return _customerRepository.Delete(CustomerId);
+            bool CustomerDeleted = _customerRepository.Delete(CustomerId);
+            if(CustomerDeleted)
+            {
+                _userRepository.Delete(ExistingCustomer.UserId);
+            }
+            return CustomerDeleted;
         }
     }
 }
