@@ -1,7 +1,7 @@
 using BookStoreAPI.Models;
 namespace BookStoreAPI.DTOs.Payment
 {
-    public class PaymentResposeDto
+    public class PaymentResponseDto
     {
         public int PaymentId { get; set; }
         public required int OrderId { get; set; }
