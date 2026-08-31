@@ -5,9 +5,9 @@ namespace BookStoreAPI.Services
 {
     public interface IPaymentService
     {
-        List<PaymentResposeDto> GetAll();
-        PaymentResposeDto? GetById(int PaymentId);
-        PaymentResposeDto Create(PaymentCreateDto createDto);
+        List<PaymentResponseDto> GetAll();
+        PaymentResponseDto? GetById(int PaymentId);
+        PaymentResponseDto Create(PaymentCreateDto createDto);
         bool UpdateStatus(int PaymentId,PaymentUpdateDto updateDto); 
     }
 }
