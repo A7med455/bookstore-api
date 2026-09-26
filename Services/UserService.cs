@@ -20,9 +20,9 @@ namespace BookStoreAPI.Services
                 Role = user.Role
             };
         }
-        public List<UserResponseDto> GetAll()
+        public async Task<List<UserResponseDto>> GetAll()
         {
-            List<User> users = _userRepository.GetAll();
+            List<User> users = await _userRepository.GetAll();
             List<UserResponseDto> Result = new List<UserResponseDto>();
             foreach(User user in users)
             {
@@ -30,9 +30,9 @@ namespace BookStoreAPI.Services
             } 
             return Result;
         }
-        public UserResponseDto? GetById(int UserId)
+        public async Task<UserResponseDto?> GetById(int UserId)
         {
-            User? ExistingUser = _userRepository.GetById(UserId);
+            User? ExistingUser = await _userRepository.GetById(UserId);
             if(ExistingUser == null)
             {
                 return null;

@@ -15,15 +15,16 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpGet]
-        public ActionResult<List<UserResponseDto>> GetAll()
+        public async Task<ActionResult<List<UserResponseDto>>> GetAll()
         {
-            return Ok(_userService.GetAll());
+            var Users = await _userService.GetAll();
+            return Ok(Users);
         }
  
         [HttpGet("{id}")]
-        public ActionResult<UserResponseDto> GetById(int id)
+        public async Task<ActionResult<UserResponseDto>> GetById(int id)
         {
-            var user = _userService.GetById(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 return NotFound($"User with ID {id} not found");

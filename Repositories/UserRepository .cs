@@ -1,5 +1,6 @@
 using BookStoreAPI.Data;
 using BookStoreAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreAPI.Repositories
 {
@@ -10,31 +11,31 @@ namespace BookStoreAPI.Repositories
         {
             _context = context;
         }
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return _context.Users.ToList();
+            return await _context.Users.ToListAsync();
         }
 
-        public User? GetById(int UserId)
+        public async Task<User?> GetById(int UserId)
         {
-            return _context.Users.Find(UserId);
+            return await _context.Users.FindAsync(UserId);
         }
 
-        public User? GetByEmail(string email)
+        public async Task<User?> GetByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public User Create(User user)
+        public async Task<User> Create(User user)
         {
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return user;
         }
 
-        public bool Update(int UserId,User user)
+        public async Task<bool> Update(int UserId,User user)
         {
-            var existingUser = _context.Users.Find(UserId);
+            var existingUser = await _context.Users.FindAsync(UserId);
             if(existingUser == null)
             {
                 return false;
@@ -42,19 +43,19 @@ namespace BookStoreAPI.Repositories
             existingUser.Email = user.Email;
             existingUser.PasswordHash = user.PasswordHash;
             existingUser.Role = user.Role;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public bool Delete(int UserId)
+        public async Task<bool> Delete(int UserId)
         {
-            var existingUser = _context.Users.Find(UserId);
+            var existingUser = await _context.Users.FindAsync(UserId);
             if(existingUser == null)
             {
                 return false;
             }
             _context.Users.Remove(existingUser);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }

@@ -4,11 +4,11 @@ namespace BookStoreAPI.Repositories
 {
     public interface IUserRepository
     {
-        List<User> GetAll();
-        User? GetById(int userId);
-        User? GetByEmail(string email);   // needed for login lookups later
-        User Create(User user);
-        bool Update(int userId, User user);
-        bool Delete(int userId);
+        Task<List<User>> GetAll();
+        Task<User?> GetById(int userId);
+        Task<User?> GetByEmail(string email);   // needed for login lookups later
+        Task<User> Create(User user);
+        Task<bool> Update(int userId, User user);
+        Task<bool> Delete(int userId);
     }
 }

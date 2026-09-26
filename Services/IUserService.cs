@@ -4,7 +4,7 @@ namespace BookStoreAPI.Services
 {
     public interface IUserService
     {
-        List<UserResponseDto> GetAll();
-        UserResponseDto? GetById(int UserId);
+        Task<List<UserResponseDto>> GetAll();
+        Task<UserResponseDto?> GetById(int UserId);
     }
 }
