@@ -3,11 +3,11 @@ namespace BookStoreAPI.Repositories
 {
     public interface ICategoryRepository
     {
-        List<Category> GetAll();
-        Category? GetById(int CategoryId);
-        Category Create(Category category);
-        bool Update(int CategoryId,Category category);
-        bool Delete(int CategoryId);
+        Task<List<Category>> GetAll();
+        Task<Category?> GetById(int CategoryId);
+        Task<Category> Create(Category category);
+        Task<bool> Update(int CategoryId,Category category);
+        Task<bool> Delete(int CategoryId);
 
     }
 }

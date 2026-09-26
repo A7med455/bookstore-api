@@ -29,9 +29,9 @@ namespace BookStoreAPI.Services
                 Description = createDto.Description
             };
         }
-        public List<CategoryResponseDto> GetAll()
+        public async Task<List<CategoryResponseDto>> GetAll()
         {
-            List<Category> categories = _categoryRepository.GetAll();
+            List<Category> categories = await _categoryRepository.GetAll();
             List<CategoryResponseDto> results = new List<CategoryResponseDto>();
             foreach(Category category in categories)
             {
@@ -39,28 +39,28 @@ namespace BookStoreAPI.Services
             }
             return results;
         }
-        public CategoryResponseDto? GetById(int CategoryId)
+        public async Task<CategoryResponseDto?> GetById(int CategoryId)
         {
-            Category? ExistingCategory = _categoryRepository.GetById(CategoryId);
+            Category? ExistingCategory = await _categoryRepository.GetById(CategoryId);
             if(ExistingCategory == null)
             {
                 return null;
             }
             return MapToResponse(ExistingCategory);
         }
-        public CategoryResponseDto Create(CategoryCreateDto CategoryDto)
+        public async Task<CategoryResponseDto> Create(CategoryCreateDto CategoryDto)
         {
             if(string.IsNullOrWhiteSpace(CategoryDto.CategoryType))
             {
                 throw new ArgumentException("Category Type cannot be empty");
             }
             Category category = MapToCategory(CategoryDto);
-            _categoryRepository.Create(category);
+            await _categoryRepository.Create(category);
             return MapToResponse(category);
         }
-        public bool Update(int CategoryId,CategoryUpdateDto updateDto)
+        public async Task<bool> Update(int CategoryId,CategoryUpdateDto updateDto)
         {
-            Category? category = _categoryRepository.GetById(CategoryId);
+            Category? category = await _categoryRepository.GetById(CategoryId);
             if(category == null)
             {
                 return false;
@@ -78,12 +78,13 @@ namespace BookStoreAPI.Services
             {
                 category.Description = updateDto.Description;
             }
-            _categoryRepository.Update(CategoryId,category);
+            await _categoryRepository.Update(CategoryId,category);
             return true;
         }
-        public bool Delete(int CategoryId)
+        public async Task<bool> Delete(int CategoryId)
         {
-            if(!_categoryRepository.Delete(CategoryId))
+            var category = await _categoryRepository.Delete(CategoryId);
+            if(!category)
             {
                 return false;
             }

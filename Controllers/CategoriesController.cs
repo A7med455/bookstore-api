@@ -14,14 +14,15 @@ namespace BookStoreAPI.Controllers
             _categoryService = categoryService;
         }
         [HttpGet]
-        public ActionResult<List<CategoryResponseDto>> GetAll()
+        public async Task<ActionResult<List<CategoryResponseDto>>> GetAll()
         {
-            return Ok(_categoryService.GetAll());
+            var categories = await _categoryService.GetAll();
+            return Ok(categories);
         }
         [HttpGet("{id}")]
-        public ActionResult<CategoryResponseDto> GetById(int id)
+        public async Task<ActionResult<CategoryResponseDto>> GetById(int id)
         {
-            var Category = _categoryService.GetById(id);
+            var Category = await _categoryService.GetById(id);
             if(Category == null)
             {
                 return NotFound($"Category with ID {id} not found");
@@ -29,11 +30,11 @@ namespace BookStoreAPI.Controllers
             return Ok(Category);
         }
         [HttpPost]
-        public ActionResult<CategoryResponseDto> Create(CategoryCreateDto createDto)
+        public async Task<ActionResult<CategoryResponseDto>> Create(CategoryCreateDto createDto)
         {
             try
             {
-                var category = _categoryService.Create(createDto);
+                var category = await _categoryService.Create(createDto);
                 return Ok(category);
             }
             catch(ArgumentException ex)
@@ -42,11 +43,11 @@ namespace BookStoreAPI.Controllers
             }
         }
         [HttpPut("{id}")]
-        public ActionResult Update(int id,CategoryUpdateDto updateDto)
+        public async Task<ActionResult> Update(int id,CategoryUpdateDto updateDto)
         {
             try
             {
-                var Success = _categoryService.Update(id,updateDto);
+                var Success = await _categoryService.Update(id,updateDto);
                 if(!Success)
                 {
                     return NotFound($"Category with ID {id} not found");
@@ -59,9 +60,9 @@ namespace BookStoreAPI.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-                var Success = _categoryService.Delete(id);
+                var Success = await _categoryService.Delete(id);
                 if(!Success)
                 {
                     return NotFound($"Category with ID {id} not found");

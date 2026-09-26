@@ -1,5 +1,6 @@
 using BookStoreAPI.Data;
 using BookStoreAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreAPI.Repositories
 {
@@ -10,46 +11,45 @@ namespace BookStoreAPI.Repositories
         {
             _context = context;
         }
-        public List<Category> GetAll()
+        public async Task<List<Category>> GetAll()
         {
-            return _context.Categories.ToList();
+            return await _context.Categories.ToListAsync();
         }
 
-        public Category? GetById(int CategoryId)
+        public async Task<Category?> GetById(int CategoryId)
         {
-           return  _context.Categories.Find(CategoryId);
+           return  await _context.Categories.FindAsync(CategoryId);
         }
 
-        public Category Create(Category category)
+        public async Task<Category> Create(Category category)
         {
             _context.Categories.Add(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return category;
         }
 
-        public bool Update(int CategoryId,Category category)
+        public async Task<bool> Update(int CategoryId,Category category)
         {
-            var existingCategory = _context.Categories.Find(CategoryId);
+            var existingCategory = await _context.Categories.FindAsync(CategoryId);
             if(existingCategory == null)
             {
                 return false;
             }
-            existingCategory.CategoryId = category.CategoryId;
             existingCategory.CategoryType = category.CategoryType;
             existingCategory.Description = category.Description;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public bool Delete(int CategoryId)
+        public async Task<bool> Delete(int CategoryId)
         {
-            var existingCategory = _context.Categories.Find(CategoryId);
+            var existingCategory = await _context.Categories.FindAsync(CategoryId);
             if(existingCategory == null)
             {
                 return false;
             }
             _context.Categories.Remove(existingCategory);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }
