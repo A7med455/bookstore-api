@@ -12,26 +12,26 @@ namespace BookStoreAPI.Repositories
             _context = context;
         }
 
-        public List<Book> GetAll()
+        public async Task<List<Book>> GetAll()
         {
-            return _context.Books.Include(b => b.Category).Include(b => b.Author).ToList();
+            return await _context.Books.Include(b => b.Category).Include(b => b.Author).ToListAsync();
         }
 
-        public Book? GetById(int id)
+        public async Task<Book?> GetById(int id)
         {
-            return _context.Books.Include(b => b.Author).Include(b => b.Category).FirstOrDefault(b => b.BookId == id);
+            return await _context.Books.Include(b => b.Author).Include(b => b.Category).FirstOrDefaultAsync(b => b.BookId == id);
         }
          
-        public Book Create(Book book)
+        public async Task<Book> Create(Book book)
         {
             _context.Books.Add(book); //stage the change in memory , not saved in DB yet
-            _context.SaveChanges();   //now it's saved in DB
-            return book;
+            await _context.SaveChangesAsync();   //now it's saved in DB
+            return  book;
         }
 
-        public bool Update(int id, Book book)
+        public async Task<bool> Update(int id, Book book)
         {
-            var existingBook = _context.Books.Find(id);
+            var existingBook = await _context.Books.FindAsync(id);
             if (existingBook == null)
             {
                 return false;
@@ -44,19 +44,19 @@ namespace BookStoreAPI.Repositories
             existingBook.AuthorId = book.AuthorId;
             existingBook.PublishedDate = book.PublishedDate;
             _context.Books.Update(existingBook);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var existingBook = _context.Books.Find(id);
+            var existingBook = await _context.Books.FindAsync(id);
             if(existingBook == null)
             {
                 return false;
             }
             _context.Books.Remove(existingBook);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
