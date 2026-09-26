@@ -3,11 +3,11 @@ namespace BookStoreAPI.Services
 {
     public interface IBookService
     {
-            List<BookResponseDto> GetAll();
-            BookResponseDto? GetById(int BookId);
-            BookResponseDto Create(BookCreateDto dto);
-            bool Update(int BookId,BookUpdateDto dto);
-            bool Delete(int BookId);
+            Task<List<BookResponseDto>> GetAll();
+            Task<BookResponseDto?> GetById(int BookId);
+            Task<BookResponseDto> Create(BookCreateDto dto);
+            Task<bool> Update(int BookId,BookUpdateDto dto);
+            Task<bool> Delete(int BookId);
     
     }
 }
