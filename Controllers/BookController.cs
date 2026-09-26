@@ -1,4 +1,5 @@
 using BookStoreAPI.DTOs.Book;
+using BookStoreAPI.Models;
 using BookStoreAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,14 +15,15 @@ namespace BookStoreAPI.Controllers
             _bookService = bookService;
         }
         [HttpGet]
-        public ActionResult<List<BookResponseDto>> GetAll()
+        public async Task<ActionResult<List<BookResponseDto>>> GetAll()
         {
-            return Ok(_bookService.GetAll());
+            var books = await _bookService.GetAll();
+            return Ok(books);
         }
         [HttpGet("{id}")]
-        public ActionResult<BookResponseDto> GetById(int id)
+        public async Task<ActionResult<BookResponseDto>> GetById(int id)
         {
-            var book = _bookService.GetById(id);
+            var book = await _bookService.GetById(id);
             if(book == null)
             {
                 return NotFound($"Book With ID {id} not found");
@@ -29,11 +31,11 @@ namespace BookStoreAPI.Controllers
             return Ok(book);
         }
         [HttpPost]
-        public ActionResult<BookResponseDto> Create(BookCreateDto createDto)
+        public async Task<ActionResult<BookResponseDto>> Create(BookCreateDto createDto)
         {
             try
             {
-                var Book = _bookService.Create(createDto);
+                var Book = await _bookService.Create(createDto);
                 return Ok(Book);
             }
             catch(ArgumentException ex)
@@ -42,11 +44,11 @@ namespace BookStoreAPI.Controllers
             }
         }
         [HttpPut("{id}")]
-        public ActionResult Update(int id,BookUpdateDto updateDto)
+        public async Task<ActionResult> Update(int id,BookUpdateDto updateDto)
         {
             try
             {
-                var Success = _bookService.Update(id,updateDto);
+                var Success = await _bookService.Update(id,updateDto);
                 if(!Success)
                 {
                     return NotFound($"Book with ID {id} not found");
@@ -59,9 +61,9 @@ namespace BookStoreAPI.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var Success = _bookService.Delete(id);
+            var Success = await _bookService.Delete(id);
             if(!Success)
             {
                 return NotFound($"Book with ID {id} not found");
