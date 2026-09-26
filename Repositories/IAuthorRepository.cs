@@ -4,10 +4,10 @@ namespace BookStoreAPI.Repositories
 {
     public interface IAuthorRepository
     {
-        List<Author> GetAll();
-        Author? GetById(int AuthorId);
-        Author Create(Author author);
-        bool Update(int AuthorId,Author author);
-        bool Delete(int AuthorId);
+        Task<List<Author>> GetAll();
+        Task<Author?> GetById(int AuthorId);
+        Task<Author> Create(Author author);
+        Task<bool> Update(int AuthorId,Author author);
+        Task<bool> Delete(int AuthorId);
     }
 }

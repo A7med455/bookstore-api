@@ -15,15 +15,16 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpGet]
-        public ActionResult<List<AuthorResponseDto>> GetAll()
+        public async Task<ActionResult<List<AuthorResponseDto>>> GetAll()
         {
-            return Ok(_authorService.GetAll());
+            var authors = await _authorService.GetAll();
+            return Ok(authors);
         }
  
         [HttpGet("{id}")]
-        public ActionResult<AuthorResponseDto> GetById(int id)
+        public async Task<ActionResult<AuthorResponseDto>> GetById(int id)
         {
-            var author = _authorService.GetById(id);
+            var author = await _authorService.GetById(id);
             if (author == null)
             {
                 return NotFound($"Author with ID {id} not found");
@@ -31,11 +32,11 @@ namespace BookStoreAPI.Controllers
             return Ok(author);
         }
         [HttpPost("admin")]
-        public ActionResult<AuthorResponseDto> CreateByAdmin(AuthorAdminCreateDto createDto)
+        public async Task<ActionResult<AuthorResponseDto>> CreateByAdmin(AuthorAdminCreateDto createDto)
         {
             try
             {
-                var author = _authorService.CreateByAdmin(createDto);
+                var author = await _authorService.CreateByAdmin(createDto);
                 return Ok(author);
             }
             catch (ArgumentException ex)
@@ -45,11 +46,11 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpPost("register")]
-        public ActionResult<AuthorResponseDto> Register(AuthorRegisterDto registerDto)
+        public async Task<ActionResult<AuthorResponseDto>> Register(AuthorRegisterDto registerDto)
         {
             try
             {
-                var author = _authorService.Register(registerDto);
+                var author = await _authorService.Register(registerDto);
                 return Ok(author);
             }
             catch (ArgumentException ex)
@@ -59,11 +60,11 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpPut("{id}")]
-        public ActionResult Update(int id, AuthorUpdateDto updateDto)
+        public async Task<ActionResult> Update(int id, AuthorUpdateDto updateDto)
         {
             try
             {
-                var success = _authorService.Update(id, updateDto);
+                var success = await _authorService.Update(id, updateDto);
                 if (!success)
                 {
                     return NotFound($"Author with ID {id} not found");
@@ -77,9 +78,9 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var success = _authorService.Delete(id);
+            var success = await _authorService.Delete(id);
             if (!success)
             {
                 return NotFound($"Author with ID {id} not found");

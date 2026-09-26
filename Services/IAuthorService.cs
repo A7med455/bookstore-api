@@ -4,12 +4,12 @@ namespace BookStoreAPI.Services
 {
     public interface IAuthorService
     {
-        List<AuthorResponseDto> GetAll();
-        AuthorResponseDto? GetById(int AuthorId);
-        AuthorResponseDto Register(AuthorRegisterDto registerDto);
-        AuthorResponseDto CreateByAdmin(AuthorAdminCreateDto createDto);
-        bool Update(int AuthorId, AuthorUpdateDto dto);
-        bool Delete(int AuthorId);
+        Task<List<AuthorResponseDto>> GetAll();
+        Task<AuthorResponseDto?> GetById(int AuthorId);
+        Task<AuthorResponseDto> Register(AuthorRegisterDto registerDto);
+        Task<AuthorResponseDto> CreateByAdmin(AuthorAdminCreateDto createDto);
+        Task<bool> Update(int AuthorId, AuthorUpdateDto dto);
+        Task<bool> Delete(int AuthorId);
 
     }
 }
