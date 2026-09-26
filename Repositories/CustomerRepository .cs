@@ -1,5 +1,6 @@
 using BookStoreAPI.Data;
 using BookStoreAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreAPI.Repositories
 {
@@ -11,20 +12,20 @@ namespace BookStoreAPI.Repositories
             _context = context;
         }
 
-        public List<Customer> GetAll() => _context.Customers.ToList();
+        public async Task<List<Customer>> GetAll() => await _context.Customers.ToListAsync();
 
-        public Customer? GetById(int customerId) => _context.Customers.Find(customerId);
+        public async Task<Customer?> GetById(int customerId) => await _context.Customers.FindAsync(customerId);
 
-        public Customer Create(Customer customer)
+        public async Task<Customer> Create(Customer customer)
         {
             _context.Customers.Add(customer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return customer;
         }
 
-        public bool Update(int customerId, Customer customer)
+        public async Task<bool> Update(int customerId, Customer customer)
         {
-            var existingCustomer = _context.Customers.Find(customerId);
+            var existingCustomer = await _context.Customers.FindAsync(customerId);
             if (existingCustomer == null)
             {
                 return false;
@@ -32,19 +33,19 @@ namespace BookStoreAPI.Repositories
             existingCustomer.AccountUserName = customer.AccountUserName;
             existingCustomer.Name = customer.Name;
             existingCustomer.Age = customer.Age;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public bool Delete(int customerId)
+        public async Task<bool> Delete(int customerId)
         {
-            var existingCustomer = _context.Customers.Find(customerId);
+            var existingCustomer = await _context.Customers.FindAsync(customerId);
             if (existingCustomer == null) 
             {
                 return false;
             }
             _context.Customers.Remove(existingCustomer);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }

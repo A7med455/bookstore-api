@@ -4,10 +4,10 @@ namespace BookStoreAPI.Services
 {
     public interface ICustomerService
     {
-        public List<CustomerResponseDto> GetAll();
-        public CustomerResponseDto? GetById(int CustomerId);
-        public CustomerResponseDto Create(CustomerRegisterDto registerDto);
-        public bool Update(int CustomerId,CustomerUpdateDto updateDto);
-        public bool Delete(int CustomerId);
+        public Task<List<CustomerResponseDto>> GetAll();
+        public Task<CustomerResponseDto?> GetById(int CustomerId);
+        public Task<CustomerResponseDto> Create(CustomerRegisterDto registerDto);
+        public Task<bool> Update(int CustomerId,CustomerUpdateDto updateDto);
+        public Task<bool> Delete(int CustomerId);
     }
 }

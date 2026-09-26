@@ -5,10 +5,10 @@ namespace BookStoreAPI.Repositories
 {
     public interface ICustomerRepository
     {
-        List<Customer> GetAll();
-        Customer? GetById(int customerId);
-        Customer Create(Customer customer);
-        bool Update(int customerId, Customer customer);
-        bool Delete(int customerId);
+        Task<List<Customer>> GetAll();
+        Task<Customer?> GetById(int customerId);
+        Task<Customer> Create(Customer customer);
+        Task<bool> Update(int customerId, Customer customer);
+        Task<bool> Delete(int customerId);
     }
 }

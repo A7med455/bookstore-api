@@ -25,7 +25,7 @@ namespace BookStoreAPI.Services
                 Age = customer.Age
             };
         }
-        public CustomerResponseDto Create(CustomerRegisterDto registerDto)
+        public async Task<CustomerResponseDto> Create(CustomerRegisterDto registerDto)
         {
             var hasher = new PasswordHasher<User>();
             string hashedPassword = hasher.HashPassword(null!,registerDto.Password);
@@ -35,7 +35,7 @@ namespace BookStoreAPI.Services
                 PasswordHash = hashedPassword,
                 Role = Role.Customer
             };
-            User CreatedUser = _userRepository.Create(NewUser);
+            User CreatedUser = await _userRepository.Create(NewUser);
             Customer NewCustomer = new Customer
             {
                 UserId = CreatedUser.UserId,
@@ -43,12 +43,12 @@ namespace BookStoreAPI.Services
                 AccountUserName = registerDto.AccountUserName,
                 Age = registerDto.Age
             };
-            Customer ExistingCustomer = _customerRepository.Create(NewCustomer);
+            Customer ExistingCustomer = await _customerRepository.Create(NewCustomer);
             return MapToResponse(ExistingCustomer);
         }
-        public List<CustomerResponseDto> GetAll()
+        public async Task<List<CustomerResponseDto>> GetAll()
         {
-            List<Customer> customers = _customerRepository.GetAll();
+            List<Customer> customers = await _customerRepository.GetAll();
             List<CustomerResponseDto> ExistingCustomer = new List<CustomerResponseDto>();
             foreach(Customer customer in customers)
             {
@@ -56,18 +56,18 @@ namespace BookStoreAPI.Services
             }
             return ExistingCustomer;
         }
-        public CustomerResponseDto? GetById(int CustomerId)
+        public async Task<CustomerResponseDto?> GetById(int CustomerId)
         {
-            Customer? ExistingCustomer = _customerRepository.GetById(CustomerId);
+            Customer? ExistingCustomer = await _customerRepository.GetById(CustomerId);
             if(ExistingCustomer == null)
             {
                 return null;
             }
             return MapToResponse(ExistingCustomer);
         }
-        public bool Update(int CustomerId,CustomerUpdateDto updateDto)
+        public async Task<bool> Update(int CustomerId,CustomerUpdateDto updateDto)
         {
-            Customer? ExistingCustomer = _customerRepository.GetById(CustomerId);
+            Customer? ExistingCustomer = await _customerRepository.GetById(CustomerId);
             if(ExistingCustomer == null)
             {
                 return false;
@@ -92,20 +92,20 @@ namespace BookStoreAPI.Services
             {
                 ExistingCustomer.Age = updateDto.Age.Value;
             }
-            _customerRepository.Update(CustomerId,ExistingCustomer);
+            await _customerRepository.Update(CustomerId,ExistingCustomer);
             return true;
         }
-        public bool Delete(int CustomerId)
+        public async Task<bool> Delete(int CustomerId)
         {
-            Customer? ExistingCustomer = _customerRepository.GetById(CustomerId);
+            Customer? ExistingCustomer = await _customerRepository.GetById(CustomerId);
             if(ExistingCustomer == null)
             {
                 return false;
             }
-            bool CustomerDeleted = _customerRepository.Delete(CustomerId);
+            bool CustomerDeleted = await _customerRepository.Delete(CustomerId);
             if(CustomerDeleted)
             {
-                _userRepository.Delete(ExistingCustomer.UserId);
+                await _userRepository.Delete(ExistingCustomer.UserId);
             }
             return CustomerDeleted;
         }

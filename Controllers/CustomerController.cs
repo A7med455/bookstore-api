@@ -15,15 +15,16 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpGet]
-        public ActionResult<List<CustomerResponseDto>> GetAll()
+        public async Task<ActionResult<List<CustomerResponseDto>>> GetAll()
         {
-            return Ok(_customerService.GetAll());
+            var Customers = await _customerService.GetAll();
+            return Ok(Customers);
         }
  
         [HttpGet("{id}")]
-        public ActionResult<CustomerResponseDto> GetById(int id)
+        public async Task<ActionResult<CustomerResponseDto>> GetById(int id)
         {
-            var customer = _customerService.GetById(id);
+            var customer = await _customerService.GetById(id);
             if (customer == null)
             {
                 return NotFound($"Customer with ID {id} not found");
@@ -32,11 +33,11 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpPost]
-        public ActionResult<CustomerResponseDto> Create(CustomerRegisterDto registerDto)
+        public async Task<ActionResult<CustomerResponseDto>> Create(CustomerRegisterDto registerDto)
         {
             try
             {
-                var customer = _customerService.Create(registerDto);
+                var customer = await _customerService.Create(registerDto);
                 return Ok(customer);
             }
             catch (ArgumentException ex)
@@ -46,11 +47,11 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpPut("{id}")]
-        public ActionResult Update(int id, CustomerUpdateDto updateDto)
+        public async Task<ActionResult> Update(int id, CustomerUpdateDto updateDto)
         {
             try
             {
-                var success = _customerService.Update(id, updateDto);
+                var success = await _customerService.Update(id, updateDto);
                 if (!success)
                 {
                     return NotFound($"Customer with ID {id} not found");
@@ -64,9 +65,9 @@ namespace BookStoreAPI.Controllers
         }
  
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var success = _customerService.Delete(id);
+            var success = await _customerService.Delete(id);
             if (!success)
             {
                 return NotFound($"Customer with ID {id} not found");
