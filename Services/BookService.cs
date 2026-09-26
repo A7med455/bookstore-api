@@ -50,9 +50,9 @@ namespace BookStoreAPI.Services
                 AuthorId = dto.AuthorId
             };
         }
-        public List<BookResponseDto> GetAll()
+        public async Task<List<BookResponseDto>> GetAll()
         {
-            List<Book> books = _BookRepository.GetAll();
+            List<Book> books =await _BookRepository.GetAll();
             List<BookResponseDto> result = new List<BookResponseDto>();
 
             foreach(Book book in books)
@@ -62,16 +62,16 @@ namespace BookStoreAPI.Services
             return result;
         }
 
-        public BookResponseDto? GetById(int BookId)
+        public async Task<BookResponseDto?> GetById(int BookId)
         {
-            Book? book = _BookRepository.GetById(BookId);
+            Book? book = await _BookRepository.GetById(BookId);
             if(book == null)
             {
                 return null;
             }
             return MapToResponseDto(book);
         }
-        public BookResponseDto Create(BookCreateDto BookDto)
+        public async Task<BookResponseDto> Create(BookCreateDto BookDto)
         {
             if(BookDto.Price < 0)
             {
@@ -87,13 +87,13 @@ namespace BookStoreAPI.Services
             }
 
             Book NewBook = MapToBook(BookDto);
-            Book CreatedBook = _BookRepository.Create(NewBook);
-            Book? BookWithDetails = _BookRepository.GetById(CreatedBook.BookId);
+            Book CreatedBook =await _BookRepository.Create(NewBook);
+            Book? BookWithDetails =await _BookRepository.GetById(CreatedBook.BookId);
             return MapToResponseDto(BookWithDetails!);
         }
-        public bool Update(int BookId, BookUpdateDto BookDto)
+        public async Task<bool> Update(int BookId, BookUpdateDto BookDto)
         {
-            Book? ExistingBook = _BookRepository.GetById(BookId);
+            Book? ExistingBook =await _BookRepository.GetById(BookId);
             if(ExistingBook == null)
             {
                 return false;
@@ -135,17 +135,17 @@ namespace BookStoreAPI.Services
             {
                 ExistingBook.PublishedDate = BookDto.PublishedDate.Value;
             }
-            _BookRepository.Update(BookId,ExistingBook);
+            await _BookRepository.Update(BookId,ExistingBook);
             return true;
         }
-        public bool Delete(int BookId)
+        public async Task<bool> Delete(int BookId)
         {
-            Book? ExistingBook = _BookRepository.GetById(BookId);
+            Book? ExistingBook =await _BookRepository.GetById(BookId);
             if(ExistingBook == null)
             {
                 return false;
             }
-            return _BookRepository.Delete(BookId);
+            return await _BookRepository.Delete(BookId);
         }
     }   
 }
